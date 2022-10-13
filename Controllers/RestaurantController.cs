@@ -4,39 +4,27 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using shiroDotnetRestfulDocker.Models;
+using shiroDotnetRestfulDocker.Repositories;
 using System.Configuration;
 
-using static shiroDotnetRestfulDocker.Models.RestaurantsSettings;
 using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace shiroDotnetRestfulDocker.Controllers
 {
     public class RestaurantController
     {
+        private readonly RestaurantsRepository _restaurantsRepository;
+
+        public RestaurantController(RestaurantsRepository _restaurantsRepository)
+        {
+            this._restaurantsRepository = _restaurantsRepository;
+        }
+
+
         [HttpPost("/api/v1/restaurant/register")]
         public async Task<ActionResult> AddUser([FromBody] Restaurant restaurant)
         {
             Dictionary<string, string> errors = new Dictionary<string, string>();
-
-
-            // Get the current configuration file.
-            Configuration config =
-                    ConfigurationManager.OpenExeConfiguration(
-                    ConfigurationUserLevel.None);
-
-            var builder = WebApplication.CreateBuilder();
-            var restaurantsApiKey = builder.Configuration["Restaurants:ServiceApiKey"];
-            var restaurantsConnectionUrl = builder.Configuration["Restaurants:ConnectionUrl"];
-
-            var mongoUrlBuilder = new MongoUrlBuilder();
-            mongoUrlBuilder.Parse(restaurantsConnectionUrl);
-            mongoUrlBuilder.Username = "admin";
-            mongoUrlBuilder.Password = restaurantsApiKey;
-            var settings = MongoClientSettings.FromConnectionString(mongoUrlBuilder.ToString());
-            settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-            var client = new MongoClient(settings);
-            var database = client.GetDatabase("orderjnj");
-            var _restaurantsCollection = database.GetCollection<Restaurant>("restaurants");
 
             Console.WriteLine("**** Start verification ****");
             if (restaurant.Name.Length < 3)
@@ -54,16 +42,10 @@ namespace shiroDotnetRestfulDocker.Controllers
             }
             try
             {
-                var newRestaurant = new Restaurant();
-                newRestaurant.Name = restaurant.Name;
-                newRestaurant.Description = restaurant.Description;
-                await _restaurantsCollection.InsertOneAsync(newRestaurant);
-                var resultRestaurant = await _restaurantsCollection
-                    .Find(Builders<Restaurant>.Filter.Eq(r => r.Name, restaurant.Name))
-                    .FirstOrDefaultAsync();
-                Console.WriteLine("Added new restaurant --- " + resultRestaurant.ToJson());
+                await _restaurantsRepository.AddRestaurantAsync(restaurant.Name, restaurant.Description);
                 return new OkResult();
-            }catch (Exception exception)
+            }
+            catch (Exception exception)
             {
                 Console.WriteLine(exception);
                 return new BadRequestResult();

@@ -1,9 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace shiroDotnetRestfulDocker.Models
+namespace shiroDotnetRestfulDocker.Models.Responses
 {
     public class RestaurantResponse
     {
+        public RestaurantResponse()
+        {
+        }
+
         public RestaurantResponse(Restaurant restaurant)
         {
             Success = true;
@@ -18,8 +22,8 @@ namespace shiroDotnetRestfulDocker.Models
         }
 
         public bool Success { get; set; }
-        public string SuccessMessage { get; set; }
-        public string ErrorMessage { get; set; }
+        public string SuccessMessage { get; set; } = null!;
+        public string ErrorMessage { get; set; } = null!;
 
 
         [JsonPropertyName("info")]

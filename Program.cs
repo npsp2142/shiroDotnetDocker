@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
+using shiroDotnetRestfulDocker.Models;
+using shiroDotnetRestfulDocker.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // enable cross origin 
@@ -21,6 +26,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.Configure<OrderJnjDatabaseSettings>(
+    builder.Configuration.GetSection("OrderJnjDatabase"));
+
+builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>
+{
+    var restaurantsApiKey = builder.Configuration["Restaurants:ServiceApiKey"];
+    var restaurantsConnectionUrl = builder.Configuration["Restaurants:ConnectionUrl"];
+
+    var mongoUrlBuilder = new MongoUrlBuilder();
+    mongoUrlBuilder.Parse(restaurantsConnectionUrl);
+    mongoUrlBuilder.Username = "admin";
+    mongoUrlBuilder.Password = restaurantsApiKey;
+    var settings = MongoClientSettings.FromConnectionString(mongoUrlBuilder.ToString());
+    settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+    return new MongoClient(settings);
+});
+
+builder.Services.AddSingleton<UsersRepository>();
+builder.Services.AddSingleton<RestaurantsRepository>();
 
 var app = builder.Build();
 
