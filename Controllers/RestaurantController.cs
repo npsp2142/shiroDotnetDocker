@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using Microsoft.AspNetCore.Mvc;
 using shiroDotnetRestfulDocker.Models;
 using shiroDotnetRestfulDocker.Repositories;
-using System.Configuration;
-
-using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace shiroDotnetRestfulDocker.Controllers
 {
@@ -22,12 +15,12 @@ namespace shiroDotnetRestfulDocker.Controllers
 
 
         [HttpPost("/api/v1/restaurant/register")]
-        public async Task<ActionResult> AddUser([FromBody] Restaurant restaurant)
+        public async Task<ActionResult> AddRestaurant([FromBody] Restaurant restaurant)
         {
             Dictionary<string, string> errors = new Dictionary<string, string>();
 
             Console.WriteLine("**** Start verification ****");
-            if (restaurant.Name.Length < 3)
+            if (restaurant.NameEnglish.Length < 3)
             {
                 errors.Add("name", "Name too short.");
             }
@@ -40,15 +33,17 @@ namespace shiroDotnetRestfulDocker.Controllers
                 var badRequest = new BadRequestResult();
                 return badRequest;
             }
+
+            Console.WriteLine("**** Start insert ****");
             try
             {
-                await _restaurantsRepository.AddRestaurantAsync(restaurant.Name, restaurant.Description);
-                return new OkResult();
+                await _restaurantsRepository.AddRestaurantAsync(restaurant);
+                return new OkObjectResult(restaurant);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new BadRequestResult();
+                return new BadRequestObjectResult(restaurant);
             }
         }
     }
