@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using shiroDotnetRestfulDocker.Models;
 using shiroDotnetRestfulDocker.Repositories;
@@ -33,8 +32,11 @@ builder.Services.Configure<OrderJnjDatabaseSettings>(
 
 builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>
 {
-    var restaurantsApiKey = builder.Configuration["Restaurants:ServiceApiKey"];
-    var restaurantsConnectionUrl = builder.Configuration["Restaurants:ConnectionUrl"];
+    //Set a secret
+    //dotnet user-secrets set "Movies:ServiceApiKey" "12345"--project "C:\apps\WebApp1\src\WebApp1"
+
+    var restaurantsApiKey = builder.Configuration["Orderjnj:ServiceApiKey"];
+    var restaurantsConnectionUrl = builder.Configuration["Orderjnj:ConnectionUrl"];
 
     var mongoUrlBuilder = new MongoUrlBuilder();
     mongoUrlBuilder.Parse(restaurantsConnectionUrl);
