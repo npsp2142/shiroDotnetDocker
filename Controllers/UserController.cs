@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
-using MongoDB.Driver;
 using shiroDotnetRestfulDocker.Models;
 using shiroDotnetRestfulDocker.Repositories;
-using System.Configuration;
-using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace shiroDotnetRestfulDocker.Controllers
 {

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using shiroDotnetRestfulDocker.Models;
 
 namespace shiroDotnetRestfulDocker.Controllers
 {
