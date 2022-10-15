@@ -47,7 +47,7 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>
     return new MongoClient(settings);
 });
 
-builder.Services.AddSingleton<UsersRepository>();
+builder.Services.AddSingleton<UserCredentialsRepository>();
 builder.Services.AddSingleton<RestaurantsRepository>();
 builder.Services.AddSingleton<FoodOrdersRepository>();
 

@@ -9,12 +9,12 @@ namespace shiroDotnetRestfulDocker.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UsersRepository _userRepository;
+        private readonly UserCredentialsRepository _userRepository;
         private readonly FoodOrdersRepository _foodOrdersRepository;
         private readonly RestaurantsRepository _restaurantsRepository;
 
         public UserController(
-            UsersRepository usersRepository,
+            UserCredentialsRepository usersRepository,
             FoodOrdersRepository foodOrdersRepository,
             RestaurantsRepository restaurantsRepository
             )

@@ -7,11 +7,11 @@ using shiroDotnetRestfulDocker.Models.Responses;
 
 namespace shiroDotnetRestfulDocker.Repositories
 {
-    public class UsersRepository
+    public class UserCredentialsRepository
     {
         private readonly IMongoCollection<UserCredentials> _usersCollection;
 
-        public UsersRepository(IMongoClient mongoClient, IOptions<OrderJnjDatabaseSettings> settings)
+        public UserCredentialsRepository(IMongoClient mongoClient, IOptions<OrderJnjDatabaseSettings> settings)
         {
             var camelCaseConvention = new ConventionPack { new CamelCaseElementNameConvention() };
             ConventionRegistry.Register("CamelCase", camelCaseConvention, type => true);
