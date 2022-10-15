@@ -16,7 +16,6 @@ namespace shiroDotnetRestfulDocker.Models
             get { return this._id; }
             set { this._id = value; }
         }
-        public string UserName { get; set; } = string.Empty;
         public string NameTc { get; set; } = string.Empty;
         public string NameEn { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

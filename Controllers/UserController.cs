@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using shiroDotnetRestfulDocker.Models;
 using shiroDotnetRestfulDocker.Models.Requests;
 using shiroDotnetRestfulDocker.Repositories;
+using System.Linq;
 
 namespace shiroDotnetRestfulDocker.Controllers
 {
@@ -76,18 +77,27 @@ namespace shiroDotnetRestfulDocker.Controllers
             }
             if (errors.Count > 0)
             {
-                var badRequest = new BadRequestResult();
-                return badRequest;
+                var badRequest = new BadRequestObjectResult(errors);
+                return new JsonResult(badRequest);
             }
             try
             {
                 var foodOrder = new FoodOrder();
                 foodOrder.RestaurantId = new ObjectId(addRequest.RestaurantId);
-                foodOrder.UserName = addRequest.UserName;
+                foodOrder.UserId = addRequest.UserId;
                 foodOrder.NameTc = addRequest.NameTc;
                 foodOrder.NameEn = addRequest.NameEn;
                 foodOrder.Description = addRequest.Description;
-                foodOrder.ShoppingBasket = addRequest.ShoppingBasket;
+                foodOrder.ShoppingBasket = addRequest.ShoppingBasket.Select(request =>
+                {
+                    Food food = new Food();
+                    food.NameTc = request.NameTc;
+                    food.NameEn = request.NameEn;
+                    food.Description = request.Description;
+                    food.Price = request.Price;
+                    food.Remarks = request.Remarks;
+                    return food;
+                }).ToList();
                 foodOrder.Remarks = addRequest.Remarks;
                 foodOrder.Status = FoodOrder.OrderStatus.Pending.ToString();
                 foodOrder.LastModified = DateTime.UtcNow;
@@ -100,7 +110,8 @@ namespace shiroDotnetRestfulDocker.Controllers
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new BadRequestResult();
+                var badRequest = new BadRequestObjectResult(exception);
+                return new JsonResult(exception);
             }
         }
     }
