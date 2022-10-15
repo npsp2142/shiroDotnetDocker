@@ -42,6 +42,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             try
             {
                 var restaurant = new Restaurant();
+                restaurant.Id = ObjectId.GenerateNewId();
                 restaurant.NameTc = addRequest.NameTc;
                 restaurant.NameEn = addRequest.NameEn;
                 restaurant.Description = addRequest.Description;
@@ -75,11 +76,15 @@ namespace shiroDotnetRestfulDocker.Controllers
             )
         {
             var orders = await _foodOrdersRepository.GetFoodOrdersByRestaurant(
-                new ObjectId(restaurantId), cancellationToken, sortKey, sortOrder, limit, page);
+                ObjectId.Parse(restaurantId), cancellationToken, sortKey, sortOrder, limit, page);
 
             //var orderCount = await _foodOrdersRepository.GetOrderCountAsync();
             var orderCount = 0;
-            var okResult = new OkObjectResult(new FoodOrderResponse(orders, orderCount, page));
+            var foodOrderResponse = new FoodOrderResponse();
+            foodOrderResponse.orderCount = orderCount;
+            foodOrderResponse.orders = orders;
+            foodOrderResponse.page = page;
+            var okResult = new OkObjectResult(foodOrderResponse);
 
             return new JsonResult(okResult);
         }
@@ -98,7 +103,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 cancellationToken, sortKey, sortOrder, limit, page);
 
             var count = await _restaurantsRepository.GetRestaurantsCountAsync();
-            var okResult = new OkObjectResult(new RestaurantResponse(restaurants, count, page));
+            var okResult = new OkObjectResult(RestaurantResponse.Of(restaurants, count, page));
 
             return new JsonResult(okResult);
         }

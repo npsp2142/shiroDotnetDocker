@@ -1,24 +1,14 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Text.Json.Serialization;
 
 namespace shiroDotnetRestfulDocker.Models
 {
     public class FoodOrder
     {
-        private string _id = string.Empty;
-
-        [BsonElement("_id")]
-        [JsonPropertyName("_id")]
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
+        public ObjectId Id { get; set; }
         public ObjectId RestaurantId { get; set; }
-        public string UserId { get; set; } = string.Empty;
+        public ObjectId UserId { get; set; }
         public string NameTc { get; set; } = string.Empty;
         public string NameEn { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
