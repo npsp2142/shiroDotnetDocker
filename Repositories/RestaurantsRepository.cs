@@ -40,16 +40,16 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<Restaurant>.Filter.Eq(r => r.NameEn, restaurant.NameEn))
                     .FirstOrDefaultAsync();
                 Console.WriteLine("Added new restaurant --- " + resultRestaurant.ToJson());
-                return new RestaurantResponse();
+                return RestaurantResponse.Of();
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new RestaurantResponse();
+                return RestaurantResponse.Of();
             }
         }
 
-        public async Task<Restaurant> GetRestaurantByIdAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Restaurant> GetRestaurantByIdAsync(ObjectId id, CancellationToken cancellationToken = default)
         {
             var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, id);
             return await _restaurantsCollection.Find(filter).FirstOrDefaultAsync();

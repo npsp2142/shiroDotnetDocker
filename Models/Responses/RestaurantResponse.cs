@@ -2,20 +2,28 @@
 {
     public class RestaurantResponse
     {
-        public RestaurantResponse()
+        private RestaurantResponse()
         {
+
+        }
+        public static RestaurantResponse Of(IReadOnlyList<Restaurant> restaurants, long count, int page)
+        {
+            RestaurantResponse result = new RestaurantResponse();
+            result.Restaurants = restaurants;
+            result.Count = count;
+            result.Page = page;
+            return result;
         }
 
-        public RestaurantResponse(IReadOnlyList<Restaurant> restaurants, long count, int page)
+        public static RestaurantResponse Of()
         {
-            Restaurants = restaurants;
-            Count = count;
-            Page = page;
+            RestaurantResponse result = new RestaurantResponse();
+            return result;
         }
 
-        public IReadOnlyList<Restaurant> Restaurants { get; }
-        public long Count { get; }
-        public int Page { get; }
+        public IReadOnlyList<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
+        public long Count { get; set; }
+        public int Page { get; set; }
     }
 
 

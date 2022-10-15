@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using shiroDotnetRestfulDocker.Models;
-using shiroDotnetRestfulDocker.Models.Requests;
 using shiroDotnetRestfulDocker.Models.Responses;
 
 namespace shiroDotnetRestfulDocker.Repositories
@@ -62,7 +61,7 @@ namespace shiroDotnetRestfulDocker.Repositories
 
             var sortFilter = new BsonDocument(sortKey, sortOrder);
             var foodOrders = await _foodOrdersCollection
-                .Find(Builders<FoodOrder>.Filter.Eq(e => e.RestaurantId, restaurantId))
+                .Find(Builders<FoodOrder>.Filter.Eq(e => e.Id, restaurantId))
                 .Limit(limit)
                 .Skip(skip)
                 .Sort(sortFilter)
