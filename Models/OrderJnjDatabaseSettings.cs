@@ -6,6 +6,6 @@
         public string DatabaseName { get; set; } = null!;
         public string UsersCollectionName { get; set; } = null!;
         public string RestaurantsCollectionName { get; set; } = null!;
-        public string FoodsCollectionName { get; set; } = null!;
+        public string FoodOrdersCollectionName { get; set; } = null!;
     }
 }

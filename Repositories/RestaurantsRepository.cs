@@ -11,6 +11,10 @@ namespace shiroDotnetRestfulDocker.Repositories
         private readonly IMongoCollection<Restaurant> _restaurantsCollection;
         private readonly IConfiguration _configuration;
 
+        private const string DefaultSortKey = "creationTime";
+        private const int DefaultSortOrder = 1;
+        private const int DefaultFoodOrdersPerPage = 20;
+
 
         // configuration setting
         // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0
@@ -31,12 +35,9 @@ namespace shiroDotnetRestfulDocker.Repositories
         {
             try
             {
-                //var newRestaurant = new Restaurant();
-                //newRestaurant.Name = name;
-                //newRestaurant.Description = description;
                 await _restaurantsCollection.InsertOneAsync(restaurant);
                 var resultRestaurant = await _restaurantsCollection
-                    .Find(Builders<Restaurant>.Filter.Eq(r => r.NameEnglish, restaurant.NameEnglish))
+                    .Find(Builders<Restaurant>.Filter.Eq(r => r.NameEn, restaurant.NameEn))
                     .FirstOrDefaultAsync();
                 Console.WriteLine("Added new restaurant --- " + resultRestaurant.ToJson());
                 return new RestaurantResponse();
@@ -46,6 +47,39 @@ namespace shiroDotnetRestfulDocker.Repositories
                 Console.WriteLine(exception);
                 return new RestaurantResponse();
             }
+        }
+
+        public async Task<Restaurant> GetRestaurantByIdAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, id);
+            return await _restaurantsCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<IReadOnlyList<Restaurant>> GetRestaurantsAsync(
+             CancellationToken cancellationToken = default,
+             string sortKey = DefaultSortKey,
+             int sortOrder = DefaultSortOrder,
+             int foodOrdersPerPage = DefaultFoodOrdersPerPage,
+             int page = 0
+         )
+        {
+            var skip = foodOrdersPerPage * page;
+            var limit = foodOrdersPerPage;
+
+            var sortFilter = new BsonDocument(sortKey, sortOrder);
+            var restaurants = await _restaurantsCollection
+                .Find(Builders<Restaurant>.Filter.Empty)
+                .Limit(limit)
+                .Skip(skip)
+                .Sort(sortFilter)
+                .ToListAsync(cancellationToken);
+            Console.WriteLine("Get Restaurant --- " + restaurants.ToJson());
+            return restaurants;
+        }
+
+        public async Task<long> GetRestaurantsCountAsync()
+        {
+            return await _restaurantsCollection.CountDocumentsAsync(Builders<Restaurant>.Filter.Empty);
         }
     }
 }

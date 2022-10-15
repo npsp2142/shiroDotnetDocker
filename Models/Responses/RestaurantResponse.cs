@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace shiroDotnetRestfulDocker.Models.Responses
+﻿namespace shiroDotnetRestfulDocker.Models.Responses
 {
     public class RestaurantResponse
     {
@@ -8,26 +6,16 @@ namespace shiroDotnetRestfulDocker.Models.Responses
         {
         }
 
-        public RestaurantResponse(Restaurant restaurant)
+        public RestaurantResponse(IReadOnlyList<Restaurant> restaurants, long count, int page)
         {
-            Success = true;
-            Restaurant = restaurant;
+            Restaurants = restaurants;
+            Count = count;
+            Page = page;
         }
 
-        public RestaurantResponse(bool success, string message)
-        {
-            Success = success;
-            if (success) SuccessMessage = message;
-            else ErrorMessage = message;
-        }
-
-        public bool Success { get; set; }
-        public string SuccessMessage { get; set; } = null!;
-        public string ErrorMessage { get; set; } = null!;
-
-
-        [JsonPropertyName("info")]
-        public Restaurant Restaurant { get; set; }
+        public IReadOnlyList<Restaurant> Restaurants { get; }
+        public long Count { get; }
+        public int Page { get; }
     }
 
 

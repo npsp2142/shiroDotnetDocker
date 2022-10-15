@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace shiroDotnetRestfulDocker.Models
 {
-    public class Food
+    public class UserCredentials
     {
         private string _id;
         [BsonElement("_id")]
@@ -17,13 +17,6 @@ namespace shiroDotnetRestfulDocker.Models
             set { this._id = value; }
         }
         public string UserName { get; set; } = string.Empty;
-        public string NameTc { get; set; } = string.Empty;
-        public string NameEn { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public List<string> Posters { get; set; } = new List<string>();
-        public float Price { get; set; }
-        public string Remarks { get; set; } = string.Empty;
-
-
+        public string Password { get; set; } = string.Empty;
     }
 }

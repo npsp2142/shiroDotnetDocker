@@ -6,11 +6,26 @@ namespace shiroDotnetRestfulDocker.Models
 {
     public class UserDetails
     {
+        private string _id;
         [BsonElement("_id")]
         [JsonPropertyName("_id")]
         [BsonId]
-        public ObjectId Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        public string UserName { get; set; } = string.Empty;
+        public string NameTc { get; set; } = string.Empty;
+        public string NameEn { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string TelephoneNumber { get; set; } = string.Empty;
+        public FoodOrder FoodOrderCurrent { get; set; } = new FoodOrder();
+        public List<FoodOrder> FoodOrderHistory { get; set; } = new List<FoodOrder>();
+        public DateTime CreationTime { get; set; }
+        public DateTime LastAccessTime { get; set; }
+        public DateTime LastModifiedTime { get; set; }
     }
 }

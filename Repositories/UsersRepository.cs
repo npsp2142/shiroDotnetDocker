@@ -9,7 +9,7 @@ namespace shiroDotnetRestfulDocker.Repositories
 {
     public class UsersRepository
     {
-        private readonly IMongoCollection<UserDetails> _usersCollection;
+        private readonly IMongoCollection<UserCredentials> _usersCollection;
 
         public UsersRepository(IMongoClient mongoClient, IOptions<OrderJnjDatabaseSettings> settings)
         {
@@ -18,7 +18,7 @@ namespace shiroDotnetRestfulDocker.Repositories
 
             _usersCollection = mongoClient
                 .GetDatabase(settings.Value.DatabaseName)
-                .GetCollection<UserDetails>(settings.Value.UsersCollectionName);
+                .GetCollection<UserCredentials>(settings.Value.UsersCollectionName);
         }
 
         public async Task<UserResponse> AddUserAsync(string username, string password,
@@ -26,14 +26,14 @@ namespace shiroDotnetRestfulDocker.Repositories
         {
             try
             {
-                var newUser = new UserDetails();
-                newUser.Username = username;
+                var newUser = new UserCredentials();
+                newUser.UserName = username;
                 newUser.Password = password;
                 await _usersCollection.InsertOneAsync(newUser);
                 var resultUser = await _usersCollection
-                    .Find(Builders<UserDetails>.Filter.Eq(r => r.Username, username))
+                    .Find(Builders<UserCredentials>.Filter.Eq(r => r.UserName, username))
                     .FirstOrDefaultAsync();
-                Console.WriteLine("Added new restaurant --- " + resultUser.ToJson());
+                Console.WriteLine("Added new UserCredentials --- " + resultUser.ToJson());
                 return new UserResponse();
             }
             catch (Exception exception)

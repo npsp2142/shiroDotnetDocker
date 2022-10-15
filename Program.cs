@@ -49,6 +49,7 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>
 
 builder.Services.AddSingleton<UsersRepository>();
 builder.Services.AddSingleton<RestaurantsRepository>();
+builder.Services.AddSingleton<FoodOrdersRepository>();
 
 var app = builder.Build();
 
