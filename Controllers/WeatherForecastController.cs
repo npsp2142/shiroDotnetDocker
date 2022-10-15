@@ -18,6 +18,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             _logger = logger;
         }
 
+        // The endpoint is for phone request test
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
