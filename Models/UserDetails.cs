@@ -6,7 +6,8 @@ namespace shiroDotnetRestfulDocker.Models
 {
     public class UserDetails
     {
-        private string _id;
+        private string _id = string.Empty;
+
         [BsonElement("_id")]
         [JsonPropertyName("_id")]
         [BsonId]

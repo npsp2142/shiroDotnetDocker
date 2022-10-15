@@ -6,7 +6,8 @@ namespace shiroDotnetRestfulDocker.Models
 {
     public class FoodOrder
     {
-        private string _id;
+        private string _id = string.Empty;
+
         [BsonElement("_id")]
         [JsonPropertyName("_id")]
         [BsonId]

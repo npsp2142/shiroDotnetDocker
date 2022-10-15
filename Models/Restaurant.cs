@@ -6,7 +6,7 @@ namespace shiroDotnetRestfulDocker.Models
 {
     public class Restaurant
     {
-        private string _id;
+        private string _id = string.Empty;
         [BsonElement("_id")]
         [JsonPropertyName("_id")]
         [BsonId]
@@ -31,7 +31,5 @@ namespace shiroDotnetRestfulDocker.Models
         public List<Food> Menu { get; set; } = new List<Food>();
         public List<FoodOrder> FoodOrdersCurrent { get; set; } = new List<FoodOrder>();
         public List<FoodOrder> FoodOrdersHistory { get; set; } = new List<FoodOrder>();
-
-
     }
 }
