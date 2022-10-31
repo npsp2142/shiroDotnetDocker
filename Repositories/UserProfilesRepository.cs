@@ -27,6 +27,7 @@ namespace shiroDotnetRestfulDocker.Repositories
         {
             try
             {
+                Console.WriteLine("AddUserProfileAsync called --- " + userProfile.ToJson());
                 await _userProfilesCollection.InsertOneAsync(userProfile);
                 var resultUserProfile = await _userProfilesCollection
                     .Find(Builders<UserProfile>.Filter.Eq(r => r.UserId, userProfile.UserId))
@@ -37,7 +38,26 @@ namespace shiroDotnetRestfulDocker.Repositories
             catch (Exception exception)
             {
                 Console.WriteLine("Add new UserProfile failed --- " + exception.ToJson());
-                return new UserProfileResponse(false,Constants.ERROR_ADD_USER_PROFILE_FAILED);
+                return new UserProfileResponse(false, Constants.ERROR_ADD_USER_PROFILE_FAILED);
+            }
+        }
+
+        public async Task<UserProfileResponse> GetUserProfileAsync(string userId,
+       CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                Console.WriteLine("GetUserProfileAsync called --- " + userId);
+                var resultUserProfile = await _userProfilesCollection
+                    .Find(Builders<UserProfile>.Filter.Eq(r => r.UserId, userId))
+                    .FirstOrDefaultAsync(cancellationToken);
+                Console.WriteLine("GetUserProfileAsync retrieved --- " + resultUserProfile.ToJson());
+                return new UserProfileResponse(resultUserProfile);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("GetUserProfileAsync failed --- " + exception.ToJson());
+                return new UserProfileResponse(false, Constants.ERROR_ADD_USER_PROFILE_FAILED);
             }
         }
     }

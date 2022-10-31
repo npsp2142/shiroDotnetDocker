@@ -32,7 +32,7 @@ namespace shiroDotnetRestfulDocker.Repositories
         {
             try
             {
-                _logger.LogInformation("AddUserCredentialsAsync called --- username = " + username + ", password = "+ password);
+                _logger.LogInformation("AddUserCredentialsAsync called --- username = " + username + ", password = " + password);
                 var newUser = new UserCredentials();
                 newUser.Id = ObjectId.GenerateNewId();
                 newUser.UserName = username;
@@ -45,7 +45,7 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<UserCredentials>.Filter.Eq(r => r.UserName, username))
                     .FirstOrDefaultAsync(cancellationToken);
                 _logger.LogInformation("Added new UserCredentials --- " + resultUser.ToJson());
-                return new UserCredentialsResponse(true, resultUser.UserName);
+                return new UserCredentialsResponse(resultUser);
             }
             catch (Exception exception)
             {
@@ -76,7 +76,7 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<UserCredentials>.Filter.Eq(r => r.UserName, userCredentials.UserName))
                     .FirstOrDefaultAsync(cancellationToken);
 
-                if(resultUser == null)
+                if (resultUser == null)
                 {
                     _logger.LogInformation("LoginUserCredentialsAsync Login failed -- user not exist");
                     return new UserCredentialsResponse(false, Constants.ERROR_LOGIN_FAILED);

@@ -40,7 +40,6 @@ namespace shiroDotnetRestfulDocker.Controllers
             {
                 // Add new user credentials
                 var addUserResult = await _userCredentialsRepository.AddUserCredentialsAsync(addRequest.UserName, addRequest.Password);
-                Console.WriteLine("Added new user --- " + addUserResult.ToJson() + addUserResult.UserCredentials);
 
                 if (!addUserResult.Success)
                 {
@@ -50,6 +49,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 {
                     return new JsonResult(new BadRequestObjectResult(addUserResult));
                 }
+                Console.WriteLine("Added new user --- " + addUserResult.ToJson() + addUserResult.UserCredentials);
 
                 // Create new user profile
                 var newUserProfile = new UserProfile();
@@ -57,7 +57,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 string userName = addUserResult.UserCredentials.UserName;
                 newUserProfile.UserId = userName;
                 newUserProfile.LastModifiedTime = DateTime.UtcNow;
-                //Console.WriteLine("Added new newUserProfile --- " + newUserProfile.ToJson());
+                newUserProfile.FoodOrderCurrent = null;
                 var addUserProfileResult = await _userProfilesRepository.AddUserProfileAsync(newUserProfile);
                 Console.WriteLine("Added new userProfile --- " + addUserProfileResult.ToJson());
                 return new JsonResult(new OkObjectResult(addRequest));

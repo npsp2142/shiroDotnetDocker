@@ -13,7 +13,7 @@ namespace shiroDotnetRestfulDocker.Models
         public string Gender { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string TelephoneNumber { get; set; } = string.Empty;
-        public FoodOrder FoodOrderCurrent { get; set; } = new FoodOrder();
+        public FoodOrder? FoodOrderCurrent { get; set; }
         public List<FoodOrder> FoodOrderHistory { get; set; } = new List<FoodOrder>();
         public DateTime LastModifiedTime { get; set; }
     }

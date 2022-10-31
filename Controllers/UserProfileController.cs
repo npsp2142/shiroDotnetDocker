@@ -83,5 +83,21 @@ namespace shiroDotnetRestfulDocker.Controllers
                 return new JsonResult(exception);
             }
         }
+
+        [HttpPost("/api/v1/user/profile")]
+        public async Task<ActionResult> GetUserProfile(string userId)
+        {
+            try
+            {
+                var profileResponse = await _userProfilesRepository.GetUserProfileAsync(userId);
+                return new JsonResult(profileResponse);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                var badRequest = new BadRequestObjectResult(exception);
+                return new JsonResult(exception);
+            }
+        }
     }
 }
