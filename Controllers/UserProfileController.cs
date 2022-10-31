@@ -84,7 +84,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             }
         }
 
-        [HttpPost("/api/v1/user/profile")]
+        [HttpGet("/api/v1/user/profile")]
         public async Task<ActionResult> GetUserProfile(string userId)
         {
             try
