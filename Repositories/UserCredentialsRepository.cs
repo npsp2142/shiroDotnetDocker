@@ -46,7 +46,7 @@ namespace shiroDotnetRestfulDocker.Repositories
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new UserCredentialsResponse(false,Constants.ERROR_LOGIN_FAILED);
+                return new UserCredentialsResponse(false, Constants.ERROR_LOGIN_FAILED);
             }
         }
 
