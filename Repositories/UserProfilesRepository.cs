@@ -32,12 +32,12 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<UserProfile>.Filter.Eq(r => r.UserId, userProfile.UserId))
                     .FirstOrDefaultAsync(cancellationToken);
                 Console.WriteLine("Added new UserProfile --- " + resultUserProfile.ToJson());
-                return UserProfileResponse.Of(resultUserProfile);
+                return new UserProfileResponse(resultUserProfile);
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
-                return UserProfileResponse.Of(exception);
+                Console.WriteLine("Add new UserProfile failed --- " + exception.ToJson());
+                return new UserProfileResponse(false,Constants.ERROR_ADD_USER_PROFILE_FAILED);
             }
         }
     }

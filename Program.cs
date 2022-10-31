@@ -4,10 +4,12 @@ using shiroDotnetRestfulDocker.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// for logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // enable cross origin 
-
 var LocalhostDev = "_localhostDev";
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: LocalhostDev,
