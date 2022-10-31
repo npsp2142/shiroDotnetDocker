@@ -10,10 +10,7 @@ namespace shiroDotnetRestfulDocker.Controllers
     {
         private readonly UserCredentialsRepository _userCredentialsRepository;
         private readonly UserProfilesRepository _userProfilesRepository;
-        public UserCredentialsController(
-         UserCredentialsRepository userCredentialsRepository,
-         UserProfilesRepository userProfilesRepository
-         )
+        public UserCredentialsController(UserCredentialsRepository userCredentialsRepository, UserProfilesRepository userProfilesRepository)
         {
             _userCredentialsRepository = userCredentialsRepository;
             _userProfilesRepository = userProfilesRepository;
@@ -42,13 +39,23 @@ namespace shiroDotnetRestfulDocker.Controllers
             try
             {
                 // Add new user credentials
-                var addUserResult = await _userCredentialsRepository.AddUserAsync(addRequest.UserName, addRequest.Password);
-                Console.WriteLine("Added new user --- " + addUserResult.ToJson() + addUserResult.UserId);
+                var addUserResult = await _userCredentialsRepository.AddUserCredentialsAsync(addRequest.UserName, addRequest.Password);
+                Console.WriteLine("Added new user --- " + addUserResult.ToJson() + addUserResult.UserCredentials);
+
+                if (!addUserResult.Success)
+                {
+                    return new JsonResult(new BadRequestObjectResult(addUserResult));
+                }
+                if (addUserResult.UserCredentials == null)
+                {
+                    return new JsonResult(new BadRequestObjectResult(addUserResult));
+                }
 
                 // Create new user profile
                 var newUserProfile = new UserProfile();
                 newUserProfile.Id = ObjectId.GenerateNewId();
-                newUserProfile.UserId = addUserResult.UserId;
+                string userName = addUserResult.UserCredentials.UserName;
+                newUserProfile.UserId = userName;
                 newUserProfile.LastModifiedTime = DateTime.UtcNow;
                 //Console.WriteLine("Added new newUserProfile --- " + newUserProfile.ToJson());
                 var addUserProfileResult = await _userProfilesRepository.AddUserProfileAsync(newUserProfile);
@@ -62,6 +69,27 @@ namespace shiroDotnetRestfulDocker.Controllers
             }
         }
 
+        [HttpPost("/api/v1/user/login")]
+        public async Task<ActionResult> Login([FromBody] LoginRequest request)
+        {
+
+
+            try
+            {
+                UserCredentials userCredentials = new UserCredentials();
+                userCredentials.UserName = request.UserName;
+                userCredentials.Password = request.Password;
+                var result = await _userCredentialsRepository.LoginUserCredentialsAsync(userCredentials);
+                return new JsonResult(new OkObjectResult(result));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return new JsonResult(new BadRequestObjectResult(request));
+            }
+
+            return new JsonResult(new OkObjectResult(request));
+        }
 
     }
 }

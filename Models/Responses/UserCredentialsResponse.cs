@@ -1,4 +1,6 @@
-﻿namespace shiroDotnetRestfulDocker.Models.Responses
+﻿using Newtonsoft.Json;
+
+namespace shiroDotnetRestfulDocker.Models.Responses
 {
     public class UserCredentialsResponse
     {
@@ -6,14 +8,23 @@
         {
 
         }
-        public static UserCredentialsResponse Of(string userId = Constants.EmptyString, string userName = Constants.EmptyString)
+
+        public UserCredentialsResponse(UserCredentials credentials)
         {
-            UserCredentialsResponse response = new UserCredentialsResponse();
-            response.UserId = userId;
-            response.UserName = userName;
-            return response;
+            Success = true;
+            UserCredentials = credentials;
         }
-        public string UserId { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
+
+        public UserCredentialsResponse(bool success, string message)
+        {
+            Success = success;
+            Message = message;
+        }
+
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+
+        [JsonProperty("info")]
+        public UserCredentials? UserCredentials { get; set; }
     }
 }
