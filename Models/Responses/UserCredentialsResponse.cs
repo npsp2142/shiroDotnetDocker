@@ -4,11 +4,6 @@ namespace shiroDotnetRestfulDocker.Models.Responses
 {
     public class UserCredentialsResponse
     {
-        private UserCredentialsResponse()
-        {
-
-        }
-
         public UserCredentialsResponse(UserCredentials credentials)
         {
             Success = true;

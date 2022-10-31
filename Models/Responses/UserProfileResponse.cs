@@ -2,23 +2,21 @@
 {
     public class UserProfileResponse
     {
-        private UserProfileResponse()
+        public UserProfileResponse(UserProfile profile)
         {
+            Success = true;
+            UserProfile = profile;
+        }
 
-        }
-        public static UserProfileResponse Of(Exception exception)
+        public UserProfileResponse(bool success, string message)
         {
-            UserProfileResponse response = new UserProfileResponse();
-            response.exception = exception;
-            return response;
+            Success = success;
+            Message = message;
         }
-        public static UserProfileResponse Of(UserProfile userProfile)
-        {
-            UserProfileResponse response = new UserProfileResponse();
-            response.UserProfile = userProfile;
-            return response;
-        }
-        public Exception exception { get; set; }
-        public UserProfile UserProfile { get; set; }
+
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+
+        public UserProfile? UserProfile { get; set; }
     }
 }
