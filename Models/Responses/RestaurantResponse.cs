@@ -1,25 +1,31 @@
-﻿namespace shiroDotnetRestfulDocker.Models.Responses
+﻿using System.Collections.Generic;
+
+namespace shiroDotnetRestfulDocker.Models.Responses
 {
     public class RestaurantResponse
     {
-        private RestaurantResponse()
+        public RestaurantResponse(IReadOnlyList<Restaurant> restaurants, long count, int page)
         {
-
-        }
-        public static RestaurantResponse Of(IReadOnlyList<Restaurant> restaurants, long count, int page)
-        {
-            RestaurantResponse result = new RestaurantResponse();
-            result.Restaurants = restaurants;
-            result.Count = count;
-            result.Page = page;
-            return result;
+            Success = true;
+            Restaurants = restaurants;
         }
 
-        public static RestaurantResponse Of()
+        public RestaurantResponse(Restaurant restaurant)
         {
-            RestaurantResponse result = new RestaurantResponse();
-            return result;
+            Success = true;
+            var restaurants = new List<Restaurant>();
+            restaurants.Add(restaurant);
+            Restaurants = restaurants;
         }
+
+        public RestaurantResponse(bool success, string message)
+        {
+            Success = success;
+            Message = message;
+        }
+
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         public IReadOnlyList<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
         public long Count { get; set; }

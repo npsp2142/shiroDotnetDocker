@@ -8,7 +8,7 @@ namespace shiroDotnetRestfulDocker.Models
         [BsonId]
         public ObjectId Id { get; set; }
         public ObjectId RestaurantId { get; set; }
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
         public string NameTc { get; set; } = string.Empty;
         public string NameEn { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

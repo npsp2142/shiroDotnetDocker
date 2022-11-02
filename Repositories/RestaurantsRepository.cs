@@ -40,12 +40,12 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<Restaurant>.Filter.Eq(r => r.NameEn, restaurant.NameEn))
                     .FirstOrDefaultAsync();
                 Console.WriteLine("Added new restaurant --- " + resultRestaurant.ToJson());
-                return RestaurantResponse.Of();
+                return new RestaurantResponse(restaurant);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return RestaurantResponse.Of();
+                return new RestaurantResponse(false, exception.ToJson());
             }
         }
 
