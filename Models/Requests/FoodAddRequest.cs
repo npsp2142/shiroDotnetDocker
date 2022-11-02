@@ -11,6 +11,6 @@
         public string RestaurantId { get; set; } = string.Empty;
 
         public List<Food> Foods { get; set; } = new List<Food>();
-        
+
     }
 }
