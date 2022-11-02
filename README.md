@@ -1,4 +1,4 @@
-# shiroDotnetDocker
+# OrderJnj Mobile Computing Project
 
 This is comp mobile computing project.
 
