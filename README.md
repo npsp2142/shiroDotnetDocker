@@ -1,6 +1,6 @@
 # OrderJnj Mobile Computing Project
 
-sandbox for dotnet docker project
+This is comp mobile computing project.
 
 ## Useful Commands
 
@@ -16,3 +16,5 @@ dotnet format
 dotnet user-secrets set "Orderjnj:ServiceApiKey" "asdasdasd"
 dotnet user-secrets set "Orderjnj:ConnectionUrl" "asdasdasd"
 ```
+
+I am new changes
