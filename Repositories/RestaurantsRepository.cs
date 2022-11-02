@@ -49,9 +49,9 @@ namespace shiroDotnetRestfulDocker.Repositories
             }
         }
 
-        public async Task<Restaurant> GetRestaurantByIdAsync(ObjectId id, CancellationToken cancellationToken = default)
+        public async Task<Restaurant> GetRestaurantByIdAsync(ObjectId restaurantId, CancellationToken cancellationToken = default)
         {
-            var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, id);
+            var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, restaurantId);
             return await _restaurantsCollection.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -80,6 +80,21 @@ namespace shiroDotnetRestfulDocker.Repositories
         public async Task<long> GetRestaurantsCountAsync()
         {
             return await _restaurantsCollection.CountDocumentsAsync(Builders<Restaurant>.Filter.Empty);
+        }
+
+        public async Task<UpdateResult> AddFoodsAsync(List<Food> foods, ObjectId restaurantId)
+        {
+            try
+            {
+                var update = Builders<Restaurant>.Update.AddToSetEach(r => r.Menu, foods);
+                var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, restaurantId);
+                //var res = await _restaurantsCollection.UpdateOneAsync(filter, update);
+                return await _restaurantsCollection.UpdateOneAsync(filter, update);
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
         }
     }
 }

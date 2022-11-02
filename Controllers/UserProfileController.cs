@@ -59,7 +59,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 foodOrder.ShoppingBasket = addRequest.ShoppingBasket.Select(request =>
                 {
                     Food food = new Food();
-                    food.Id = ObjectId.GenerateNewId();
+                    //food.Id = ObjectId.GenerateNewId();
                     food.NameTc = request.NameTc;
                     food.NameEn = request.NameEn;
                     food.Description = request.Description;
