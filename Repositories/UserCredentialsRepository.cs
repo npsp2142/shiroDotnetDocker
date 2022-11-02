@@ -31,7 +31,7 @@ namespace shiroDotnetRestfulDocker.Repositories
            CancellationToken cancellationToken = default)
         {
             try
-            {
+            {https://www.mongodb.com/docs/manual/reference/sql-comparison/
                 _logger.LogInformation("AddUserCredentialsAsync called --- username = " + username + ", password = " + password);
                 var newUser = new UserCredentials();
                 newUser.Id = ObjectId.GenerateNewId();

@@ -7,7 +7,7 @@
         public string NameTc { get; set; } = string.Empty;
         public string NameEn { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public List<FoodAddRequest> ShoppingBasket { get; set; } = new List<FoodAddRequest>();
+        public List<Food> ShoppingBasket { get; set; } = new List<Food>();
 
         public string Remarks { get; set; } = string.Empty;
     }

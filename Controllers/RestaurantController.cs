@@ -99,5 +99,20 @@ namespace shiroDotnetRestfulDocker.Controllers
 
             return new JsonResult(okResult);
         }
+
+        [HttpPost("api/v1/restaurants/addFoods")]
+        public async Task<ActionResult> AddFoodsAsync([FromBody] FoodAddRequest foodAddRequest)
+        {
+            try
+            {
+                var res = await _restaurantsRepository.AddFoodsAsync(foodAddRequest.Foods, ObjectId.Parse(foodAddRequest.RestaurantId));
+                return new JsonResult(res);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return new BadRequestObjectResult(foodAddRequest);
+            }
+        }
     }
 }

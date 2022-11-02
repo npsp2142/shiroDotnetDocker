@@ -5,8 +5,8 @@ namespace shiroDotnetRestfulDocker.Models
 {
     public class Food
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
+        //[BsonId]
+        //public ObjectId Id { get; set; }
         public string NameTc { get; set; } = string.Empty;
         public string NameEn { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
