@@ -38,12 +38,12 @@ namespace shiroDotnetRestfulDocker.Repositories
                     .Find(Builders<FoodOrder>.Filter.Eq(r => r.NameEn, foodOrder.NameEn))
                     .FirstOrDefaultAsync();
                 Console.WriteLine("Added new FoodOrder --- " + resultFoodOrder.ToJson());
-                return new FoodOrderResponse();
+                return new FoodOrderResponse(resultFoodOrder);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new FoodOrderResponse();
+                return new FoodOrderResponse(false,"Something went wrong");
             }
         }
 

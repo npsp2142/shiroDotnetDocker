@@ -80,10 +80,7 @@ namespace shiroDotnetRestfulDocker.Controllers
 
             //var orderCount = await _foodOrdersRepository.GetOrderCountAsync();
             var orderCount = 0;
-            var foodOrderResponse = new FoodOrderResponse();
-            foodOrderResponse.orderCount = orderCount;
-            foodOrderResponse.orders = orders;
-            foodOrderResponse.page = page;
+            var foodOrderResponse = new FoodOrderResponse(orders,orderCount,page);
             var okResult = new OkObjectResult(foodOrderResponse);
 
             return new JsonResult(okResult);
@@ -103,7 +100,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 cancellationToken, sortKey, sortOrder, limit, page);
 
             var count = await _restaurantsRepository.GetRestaurantsCountAsync();
-            var okResult = new OkObjectResult(RestaurantResponse.Of(restaurants, count, page));
+            var okResult = new OkObjectResult(new RestaurantResponse(restaurants, count, page));
 
             return new JsonResult(okResult);
         }
