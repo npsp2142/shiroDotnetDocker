@@ -43,7 +43,7 @@ namespace shiroDotnetRestfulDocker.Repositories
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new FoodOrderResponse(false,"Something went wrong");
+                return new FoodOrderResponse(false, "Something went wrong");
             }
         }
 

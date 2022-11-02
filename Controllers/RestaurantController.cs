@@ -80,7 +80,7 @@ namespace shiroDotnetRestfulDocker.Controllers
 
             //var orderCount = await _foodOrdersRepository.GetOrderCountAsync();
             var orderCount = 0;
-            var foodOrderResponse = new FoodOrderResponse(orders,orderCount,page);
+            var foodOrderResponse = new FoodOrderResponse(orders, orderCount, page);
             var okResult = new OkObjectResult(foodOrderResponse);
 
             return new JsonResult(okResult);
@@ -88,13 +88,7 @@ namespace shiroDotnetRestfulDocker.Controllers
 
 
         [HttpGet("api/v1/restaurants/")]
-        public async Task<JsonResult> GetRestaurantsAsync(
-         int limit = 20,
-         [FromQuery(Name = "page")] int page = 0,
-         string sortKey = "creationTime",
-         int sortOrder = -1,
-         CancellationToken cancellationToken = default
-         )
+        public async Task<JsonResult> GetRestaurantsAsync(int limit = 20, [FromQuery(Name = "page")] int page = 0, string sortKey = "creationTime", int sortOrder = -1, CancellationToken cancellationToken = default)
         {
             var restaurants = await _restaurantsRepository.GetRestaurantsAsync(
                 cancellationToken, sortKey, sortOrder, limit, page);

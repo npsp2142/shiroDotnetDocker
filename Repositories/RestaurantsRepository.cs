@@ -45,7 +45,7 @@ namespace shiroDotnetRestfulDocker.Repositories
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new RestaurantResponse(false,exception.ToJson());
+                return new RestaurantResponse(false, exception.ToJson());
             }
         }
 
