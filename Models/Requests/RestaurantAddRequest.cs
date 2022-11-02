@@ -10,7 +10,7 @@
         public string Region { get; set; } = string.Empty;
         public string PriceLevel { get; set; } = string.Empty;
         public string TelephoneNumber { get; set; } = string.Empty;
-        public List<string> Posters { get; set; } = new List<string>();
+        public List<string> ImgUrls { get; set; } = new List<string>();
         public string Remarks { get; set; } = string.Empty;
         public int AvailableSeats { get; set; }
     }

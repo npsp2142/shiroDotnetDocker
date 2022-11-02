@@ -51,7 +51,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 restaurant.Region = addRequest.Region;
                 restaurant.PriceLevel = addRequest.PriceLevel;
                 restaurant.TelephoneNumber = addRequest.TelephoneNumber;
-                restaurant.Posters = addRequest.Posters;
+                restaurant.ImgUrls = addRequest.ImgUrls;
                 restaurant.Remarks = addRequest.Remarks;
                 restaurant.AvailableSeats = addRequest.AvailableSeats;
                 await _restaurantsRepository.AddRestaurantAsync(restaurant);
