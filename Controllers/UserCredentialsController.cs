@@ -88,7 +88,6 @@ namespace shiroDotnetRestfulDocker.Controllers
                 return new JsonResult(new BadRequestObjectResult(request));
             }
 
-            return new JsonResult(new OkObjectResult(request));
         }
 
     }

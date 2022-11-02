@@ -65,7 +65,7 @@ namespace shiroDotnetRestfulDocker.Controllers
         }
 
 
-        [HttpGet("api/v1/restaurants/getorders")]
+        [HttpGet("api/v1/restaurants/orders")]
         public async Task<JsonResult> GetOrdersAsync(
             string restaurantId,
             int limit = 20,
@@ -75,7 +75,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             CancellationToken cancellationToken = default
             )
         {
-            Console.WriteLine("getorders called",restaurantId);
+            Console.WriteLine("getorders called", restaurantId);
             var orders = await _foodOrdersRepository.GetFoodOrdersByRestaurant(
                 ObjectId.Parse(restaurantId), cancellationToken, sortKey, sortOrder, limit, page);
 
@@ -100,7 +100,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             return new JsonResult(okResult);
         }
 
-        [HttpPost("api/v1/restaurants/addFoods")]
+        [HttpPost("api/v1/restaurants/foods/add")]
         public async Task<ActionResult> AddFoodsAsync([FromBody] FoodAddRequest foodAddRequest)
         {
             try
