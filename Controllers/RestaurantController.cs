@@ -75,6 +75,7 @@ namespace shiroDotnetRestfulDocker.Controllers
             CancellationToken cancellationToken = default
             )
         {
+            Console.WriteLine("getorders called",restaurantId);
             var orders = await _foodOrdersRepository.GetFoodOrdersByRestaurant(
                 ObjectId.Parse(restaurantId), cancellationToken, sortKey, sortOrder, limit, page);
 

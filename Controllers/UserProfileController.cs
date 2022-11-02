@@ -32,7 +32,7 @@ namespace shiroDotnetRestfulDocker.Controllers
         {
             Dictionary<string, string> errors = new Dictionary<string, string>();
             Console.WriteLine("**** Start verification ****");
-
+            Console.WriteLine("order add called", addRequest.ToString());
             var restaurant = await _restaurantsRepository.GetRestaurantByIdAsync(ObjectId.Parse(addRequest.RestaurantId));
 
             if (restaurant == null)
@@ -51,8 +51,9 @@ namespace shiroDotnetRestfulDocker.Controllers
             try
             {
                 var foodOrder = new FoodOrder();
+                Console.WriteLine("order add called", addRequest.RestaurantId);
                 foodOrder.RestaurantId = ObjectId.Parse(addRequest.RestaurantId);
-                foodOrder.UserId = ObjectId.Parse(addRequest.UserId);
+                foodOrder.UserId = addRequest.UserId;
                 foodOrder.NameTc = addRequest.NameTc;
                 foodOrder.NameEn = addRequest.NameEn;
                 foodOrder.Description = addRequest.Description;
