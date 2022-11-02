@@ -1,4 +1,4 @@
-# shiroDotnetDocker
+# OrderJnj Mobile Computing Project
 
 sandbox for dotnet docker project
 
