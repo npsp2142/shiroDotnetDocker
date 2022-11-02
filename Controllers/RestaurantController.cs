@@ -114,5 +114,20 @@ namespace shiroDotnetRestfulDocker.Controllers
                 return new BadRequestObjectResult(foodAddRequest);
             }
         }
+
+        [HttpPost("api/v1/restaurants/deleteFoods")]
+        public async Task<ActionResult> DeleteFoodsAsync([FromBody] FoodDeleteRequest foodDeleteRequest)
+        {
+            try
+            {
+                var res = await _restaurantsRepository.DeleteFoodsAsync(foodDeleteRequest.FoodNames, ObjectId.Parse(foodDeleteRequest.RestaurantId));
+                return new JsonResult(res);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return new BadRequestObjectResult(foodDeleteRequest);
+            }
+        }
     }
 }

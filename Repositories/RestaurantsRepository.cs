@@ -86,13 +86,44 @@ namespace shiroDotnetRestfulDocker.Repositories
         {
             try
             {
-                var update = Builders<Restaurant>.Update.AddToSetEach(r => r.Menu, foods);
+                List<Food> foodsToAdd = new();
                 var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, restaurantId);
+                var restaurant = await _restaurantsCollection.Find(filter).FirstOrDefaultAsync();
+                foreach (var food in foods)
+                {
+                    if (!restaurant.Menu.Contains(food))
+                        foodsToAdd.Add(food);
+                }
+
+                var update = Builders<Restaurant>.Update.AddToSetEach(r => r.Menu, foodsToAdd);
+                
                 //var res = await _restaurantsCollection.UpdateOneAsync(filter, update);
                 return await _restaurantsCollection.UpdateOneAsync(filter, update);
             }
             catch (Exception exception)
             {
+                Console.WriteLine(exception);
+                return null;
+            }
+        }
+
+        public async Task<UpdateResult> DeleteFoodsAsync(List<string> foodNames, ObjectId restaurantId)
+        {
+            try
+            {
+                
+                var filter = Builders<Restaurant>.Filter.Eq(r => r.Id, restaurantId);
+                var restaurant = await _restaurantsCollection.Find(filter).FirstOrDefaultAsync();
+                var foodsToDel = restaurant.Menu.Where(f => foodNames.Contains(f.NameEn)).ToList();
+
+                var update = Builders<Restaurant>.Update.PullAll(r => r.Menu, foodsToDel);
+
+                //var res = await _restaurantsCollection.UpdateOneAsync(filter, update);
+                return await _restaurantsCollection.UpdateOneAsync(filter, update);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
                 return null;
             }
         }
