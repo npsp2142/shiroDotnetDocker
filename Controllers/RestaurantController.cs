@@ -54,6 +54,7 @@ namespace shiroDotnetRestfulDocker.Controllers
                 restaurant.ImgUrls = addRequest.ImgUrls;
                 restaurant.Remarks = addRequest.Remarks;
                 restaurant.AvailableSeats = addRequest.AvailableSeats;
+                restaurant.LastModified = DateTime.UtcNow;
                 await _restaurantsRepository.AddRestaurantAsync(restaurant);
                 return new OkObjectResult(restaurant);
             }
